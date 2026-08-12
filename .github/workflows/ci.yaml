@@ -1,0 +1,60 @@
+name: CI
+on: [ push, pull_request ]
+env:
+  # Common versions
+  GO_VERSION: '1.24.6'
+  GOLANGCI_VERSION: 'v2.3.1'
+  GOPRIVATE: github.com/activatedio/datainfra
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set git config for private reading
+        run: |
+          git config --global url.https://git:${{secrets.TOKEN_DATAINFRA}}@github.com/activatedio.insteadof https://github.com/activatedio
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false  # The golangci-lint action does its own caching.
+
+      - name: Check go mod tidy
+        run: go mod tidy && git diff --exit-code go.mod go.sum
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: ${{ env.GOLANGCI_VERSION }}
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set git config for private reading
+        run: |
+          git config --global url.https://git:${{secrets.TOKEN_DATAINFRA}}@github.com/activatedio.insteadof https://github.com/activatedio
+
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+
+      - name: Start services
+        run: |
+          docker compose up -d --wait
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run Unit Tests
+        run: go test -v -cover ./...
+        env:
+          YB_HOSTS: 127.0.0.1
+
+      - name: Clean up (optional, as runner is ephemeral)
+        run: docker compose down
