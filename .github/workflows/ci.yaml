@@ -4,16 +4,12 @@ env:
   # Common versions
   GO_VERSION: '1.24.6'
   GOLANGCI_VERSION: 'v2.3.1'
-  GOPRIVATE: github.com/activatedio/datainfra
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set git config for private reading
-        run: |
-          git config --global url.https://git:${{secrets.TOKEN_DATAINFRA}}@github.com/activatedio.insteadof https://github.com/activatedio
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -34,10 +30,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set git config for private reading
-        run: |
-          git config --global url.https://git:${{secrets.TOKEN_DATAINFRA}}@github.com/activatedio.insteadof https://github.com/activatedio
 
       - name: Set up Docker Compose
         uses: docker/setup-compose-action@v1
