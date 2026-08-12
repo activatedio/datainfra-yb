@@ -45,6 +45,38 @@ func TestProductRepository_Search(t *testing.T) {
 								a.Len(got.List, 4)
 							},
 						},
+						"@fuzzy-tolerates-typo": {
+							Arrange: func(ctx context.Context) (context.Context, []*data.SearchPredicate) {
+								return ctx, []*data.SearchPredicate{
+									{
+										Name:        "@fuzzy",
+										Operator:    data.SearchOperatorStringMatch,
+										StringValue: "Test Prodct 1",
+									},
+								}
+							},
+							Assert: func(got *data.List[*data.SearchResult[*model.Product]], err error) {
+								r.NoError(err)
+								if a.Len(got.List, 1) {
+									a.Equal("Test Product 1", got.List[0].Entity.Description)
+								}
+							},
+						},
+						"@fuzzy-no-match-below-threshold": {
+							Arrange: func(ctx context.Context) (context.Context, []*data.SearchPredicate) {
+								return ctx, []*data.SearchPredicate{
+									{
+										Name:        "@fuzzy",
+										Operator:    data.SearchOperatorStringMatch,
+										StringValue: "unrelated words",
+									},
+								}
+							},
+							Assert: func(got *data.List[*data.SearchResult[*model.Product]], err error) {
+								r.NoError(err)
+								a.Empty(got.List)
+							},
+						},
 					}
 				},
 			})
@@ -119,6 +151,14 @@ func TestProductRepository_GetSearchPredicates(t *testing.T) {
 			{
 				Name:    "@query",
 				Label:   "Query",
+				Virtual: true,
+				Operators: []data.SearchOperator{
+					data.SearchOperatorStringMatch,
+				},
+			},
+			{
+				Name:    "@fuzzy",
+				Label:   "Fuzzy",
 				Virtual: true,
 				Operators: []data.SearchOperator{
 					data.SearchOperatorStringMatch,

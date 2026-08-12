@@ -4,6 +4,7 @@ package main
 import (
 	"reflect"
 
+	"github.com/activatedio/datainfra-yb/genlib/data/yb"
 	"github.com/activatedio/datainfra/examples/data/model"
 	"github.com/activatedio/datainfra/genlib/data"
 	"github.com/activatedio/datainfra/genlib/data/gorm"
@@ -66,6 +67,13 @@ func main() {
 							Virtual:   true,
 							Operators: []data2.SearchOperator{data2.SearchOperatorStringMatch},
 							Binder:    gorm.LikeBinderCall("description"),
+						},
+						{
+							Name:      "@fuzzy",
+							Label:     "Fuzzy",
+							Virtual:   true,
+							Operators: []data2.SearchOperator{data2.SearchOperatorStringMatch},
+							Binder:    yb.TrigramSimilarityBinderCall("description", 0.6),
 						},
 					},
 				},

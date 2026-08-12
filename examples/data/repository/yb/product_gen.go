@@ -5,6 +5,7 @@ package yb
 import (
 	"context"
 	repository "github.com/activatedio/datainfra-yb/examples/data/repository"
+	yb "github.com/activatedio/datainfra-yb/pkg/data/yb"
 	model "github.com/activatedio/datainfra/examples/data/model"
 	data "github.com/activatedio/datainfra/pkg/data"
 	gorm "github.com/activatedio/datainfra/pkg/data/gorm"
@@ -83,6 +84,17 @@ func NewProductRepository(params ProductRepositoryParams) repository.ProductRepo
 						},
 					},
 					Binder: gorm.LikeBinder("description"),
+				},
+				{
+					Descriptor: &data.SearchPredicateDescriptor{
+						Name:    "@fuzzy",
+						Label:   "Fuzzy",
+						Virtual: true,
+						Operators: []data.SearchOperator{
+							data.SearchOperatorStringMatch,
+						},
+					},
+					Binder: yb.TrigramSimilarityBinder("description", 0.6),
 				},
 			},
 		}),

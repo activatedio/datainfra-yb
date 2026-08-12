@@ -1,5 +1,7 @@
 -- +goose Up
 
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 CREATE TABLE categories (
     name VARCHAR(64),
     description VARCHAR(200),
@@ -16,6 +18,8 @@ CREATE TABLE products (
     ) STORED,
     PRIMARY KEY (sku)
 );
+
+CREATE INDEX products_description_trgm ON products USING ybgin (description gin_trgm_ops);
 
 CREATE TABLE product_categories (
     product_sku VARCHAR(64),
