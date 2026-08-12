@@ -1,9 +1,8 @@
 package yb
 
 import (
-	gormsetup "github.com/activatedio/datainfra/pkg/setup/gorm"
-
 	"github.com/activatedio/datainfra-yb/pkg/data/yb"
+	gormsetup "github.com/activatedio/datainfra/pkg/setup/gorm"
 )
 
 // OwnerConfig has the configuration for the database owner

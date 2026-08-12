@@ -1,9 +1,8 @@
 package yb
 
 import (
-	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
-
 	"github.com/activatedio/datainfra-yb/pkg/data/yb"
+	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
 )
 
 // MigratorConfig defines the configuration for the YugabyteDB migrator.

@@ -1,12 +1,11 @@
 package testing
 
 import (
+	"github.com/activatedio/datainfra-yb/pkg/data/yb"
 	gormtesting "github.com/activatedio/datainfra/pkg/data/gorm/testing"
 	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
 	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
 	"go.uber.org/fx"
-
-	"github.com/activatedio/datainfra-yb/pkg/data/yb"
 )
 
 // NewAppFixture creates a new AppFixture for testing against YugabyteDB.

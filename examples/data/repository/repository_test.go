@@ -7,15 +7,14 @@ import (
 	"testing"
 	"time"
 
-	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
-	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
-	"go.uber.org/fx"
-
 	ybtestdata "github.com/activatedio/datainfra-yb/examples/data/repository/testdata/yb"
 	repoyb "github.com/activatedio/datainfra-yb/examples/data/repository/yb"
 	ybmigrations "github.com/activatedio/datainfra-yb/examples/data/repository/yb/migrations"
 	"github.com/activatedio/datainfra-yb/pkg/data/yb"
 	ybtesting "github.com/activatedio/datainfra-yb/pkg/data/yb/testing"
+	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
+	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
+	"go.uber.org/fx"
 )
 
 var (

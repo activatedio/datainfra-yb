@@ -3,12 +3,11 @@ package repository_test
 import (
 	"testing"
 
+	"github.com/activatedio/datainfra-yb/examples/data/repository"
 	"github.com/activatedio/datainfra/examples/data/model"
 	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/activatedio/datainfra-yb/examples/data/repository"
 )
 
 func TestThemeRepository_Crud(t *testing.T) {
