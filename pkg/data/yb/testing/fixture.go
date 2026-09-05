@@ -9,7 +9,7 @@ import (
 )
 
 // NewAppFixture creates a new AppFixture for testing against YugabyteDB.
-func NewAppFixture(name string, opt fx.Option) datatesting.AppFixture {
+func NewAppFixture(name string, opt fx.Option) datatesting.LifecycleFixture {
 	return gormtesting.NewAppFixture(name, opt)
 }
 

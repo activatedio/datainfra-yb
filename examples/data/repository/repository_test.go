@@ -46,10 +46,8 @@ func TestMain(m *testing.M) {
 		},
 	}
 
-	zero := 0
-
 	AppFixtures = []datatesting.AppFixture{
-		ybtesting.NewAppFixture("yugabyte", fx.Module("testing", repoyb.Index(),
+		datatesting.Bind(ybtesting.NewAppFixture("yugabyte", fx.Module("testing", repoyb.Index(),
 			fx.Provide(ybtesting.NewStaticTestingConfig(&yb.Config{
 				Hosts:                    hosts,
 				Username:                 "yugabyte",
@@ -57,7 +55,6 @@ func TestMain(m *testing.M) {
 				Name:                     "yugabyte",
 				EnableDefaultTransaction: true,
 				EnableSQLLogging:         true,
-				MaxIdleConns:             &zero,
 			}, &yb.Config{
 				Hosts:                    hosts,
 				Username:                 name,
@@ -65,8 +62,7 @@ func TestMain(m *testing.M) {
 				Name:                     name,
 				EnableDefaultTransaction: true,
 				EnableSQLLogging:         true,
-				MaxIdleConns:             &zero,
-			}, migratorData)))),
+			}, migratorData)))), datatesting.ModeReuse),
 	}
 
 	rc := m.Run()

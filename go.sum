@@ -1,5 +1,5 @@
-github.com/activatedio/datainfra v0.12.0 h1:fzADSC629pZUZi/aYjSxBeBbXzN84frXkE2XvzPK0X8=
-github.com/activatedio/datainfra v0.12.0/go.mod h1:Y4UsDtfkXre5u9HVK4pc2V8oN8twKzk/QvsUtbAPDGc=
+github.com/activatedio/datainfra v0.17.0 h1:QbTird3wLInoOWhyg/aLBoePaDZOceXyonwhCDjo1Yc=
+github.com/activatedio/datainfra v0.17.0/go.mod h1:9Asc1PcaVxpnvfCtKcPAtMcoZoiuiXYU+5vk1QtKqoM=
 github.com/activatedio/gen v0.2.0 h1:sPj7o6ogYaVd+g6hM16zw5whfXjgm1zdKRthGTOs8wo=
 github.com/activatedio/gen v0.2.0/go.mod h1:24nhBII0r/EO8li//ksDWc5tNc1nIoHyVga4gJMxjOQ=
 github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
