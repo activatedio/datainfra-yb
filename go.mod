@@ -3,7 +3,7 @@ module github.com/activatedio/datainfra-yb
 go 1.24.6
 
 require (
-	github.com/activatedio/datainfra v0.17.0
+	github.com/activatedio/datainfra v0.18.0
 	github.com/activatedio/gen v0.2.0
 	github.com/dave/jennifer v1.7.1
 	github.com/google/uuid v1.6.0

@@ -4,7 +4,6 @@ import (
 	"github.com/activatedio/datainfra-yb/pkg/data/yb"
 	gormtesting "github.com/activatedio/datainfra/pkg/data/gorm/testing"
 	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
-	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
 	"go.uber.org/fx"
 )
 
@@ -14,6 +13,6 @@ func NewAppFixture(name string, opt fx.Option) datatesting.LifecycleFixture {
 }
 
 // NewStaticTestingConfig creates a static testing configuration function from YugabyteDB configs.
-func NewStaticTestingConfig(ownerConfig, appConfig *yb.Config, migratorData []gormmigrate.MigratorData) func() gormtesting.GormTestingConfigResult {
-	return gormtesting.NewStaticGormTestingConfig(yb.NewGormConfig(ownerConfig), yb.NewGormConfig(appConfig), migratorData)
+func NewStaticTestingConfig(ownerConfig, appConfig *yb.Config) func() gormtesting.GormTestingConfigResult {
+	return gormtesting.NewStaticGormTestingConfig(yb.NewGormConfig(ownerConfig), yb.NewGormConfig(appConfig))
 }

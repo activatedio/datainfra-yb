@@ -13,6 +13,7 @@ import (
 	"github.com/activatedio/datainfra-yb/pkg/data/yb"
 	ybtesting "github.com/activatedio/datainfra-yb/pkg/data/yb/testing"
 	datatesting "github.com/activatedio/datainfra/pkg/data/testing"
+	"github.com/activatedio/datainfra/pkg/migrate"
 	gormmigrate "github.com/activatedio/datainfra/pkg/migrate/gorm"
 	"go.uber.org/fx"
 )
@@ -46,6 +47,20 @@ func TestMain(m *testing.M) {
 		},
 	}
 
+	// The fixture's stack: the schema, then the seed rows. Both goose sets
+	// carry exact Down sections.
+	makeLayers := func(cfg *gormmigrate.MigratorGormConfig) ([]migrate.Layer, error) {
+		var layers []migrate.Layer
+		for _, d := range migratorData {
+			l, err := gormmigrate.NewGooseLayer(cfg, d)
+			if err != nil {
+				return nil, err
+			}
+			layers = append(layers, l)
+		}
+		return layers, nil
+	}
+
 	AppFixtures = []datatesting.AppFixture{
 		datatesting.Bind(ybtesting.NewAppFixture("yugabyte", fx.Module("testing", repoyb.Index(),
 			fx.Provide(ybtesting.NewStaticTestingConfig(&yb.Config{
@@ -62,7 +77,7 @@ func TestMain(m *testing.M) {
 				Name:                     name,
 				EnableDefaultTransaction: true,
 				EnableSQLLogging:         true,
-			}, migratorData)))), datatesting.ModeReuse),
+			}), makeLayers))), datatesting.Requirement{}),
 	}
 
 	rc := m.Run()

@@ -4,6 +4,7 @@ package yb
 
 import (
 	"context"
+
 	repository "github.com/activatedio/datainfra-yb/examples/data/repository"
 	yb "github.com/activatedio/datainfra-yb/pkg/data/yb"
 	model "github.com/activatedio/datainfra/examples/data/model"
